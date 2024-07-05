@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
+"""python variable annotations"""
 from typing import List
 
 
 def zoom_array(lst: List, factor: int = 2) -> List:
+    """python variable annotations"""
     zoomed_in: List = [
         item for item in lst
         for i in range(int(factor))
