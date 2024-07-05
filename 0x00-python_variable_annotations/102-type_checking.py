@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""python variable annotations"""
+"""python variable annotations """
 from typing import List
 
 
