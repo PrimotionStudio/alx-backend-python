@@ -3,12 +3,12 @@
 from typing import Any, TypeVar, Union, Mapping
 
 
-type newType = TypeVar('T')
-type ret = Union[Any, newType]
-type arg = Union[newType, None]
+NewType = TypeVar('T')
+Return = Union[Any, NewType]
+Default = Union[NewType, None]
 
 
-def safely_get_value(dct: Mapping, key: Any, default: arg = None) -> ret:
+def safely_get_value(dct: Mapping, key: Any, default: Default = None) -> Return:
     """python variable annotations"""
     if key in dct:
         return dct[key]
