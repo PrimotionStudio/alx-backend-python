@@ -11,6 +11,6 @@ async def wait_n(n: int, max_delay: int) -> [float]:
     """
     This function waits for n random numbers between 0 and max_delay
     """
-    coroutines: [float] = [wait_random(max_delay) for _ in n]
+    coroutines: [float] = [wait_random(max_delay) for _ in range(n)]
     res: float = await asyncio.gather(*coroutines)
     return sorted(res)
