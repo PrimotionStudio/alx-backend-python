@@ -2,7 +2,7 @@
 """Generic utilities for github org client.
 """
 import unittest
-from parameterize import parameterize
+from parameterized import parameterized
 from typing import (
     Mapping,
     Sequence,
@@ -22,25 +22,44 @@ class TestAccessNestedMap(unittest.TestCase):
     Test the access_nested_map function.
     """
 
-    @parameterize.expand([
+    @parameterized.expand([
         (
             {"a": 1},
             ("a",),
-            None
-        )
+            1
+        ),
         (
             {"a": {"b": 2}},
             ("a",),
-            None
+            {"b": 2}
         ),
         (
             {"a": {"b": 2}},
             ("a", "b"),
-            None
+            2
         )
     ])
-    def test_access_nested_map(self, nested_map, key_list, expected):
+    def test_access_nested_map(self, nested_map, path, expected):
         """
         Test the access_nested_map function.
         """
-        self.assertEqual(access_nested_map(nested_map, key_list), expected)
+        self.assertEqual(access_nested_map(nested_map, path), expected)
+
+    @parameterized.expand([
+        (
+            {},
+            ("a",),
+            KeyError,
+        ),
+        (
+            {"a": 1},
+            ("a", "b"),
+            KeyError,
+        ),
+    ])
+    def test_access_nested_map_exception(self, nested_map, path, exceptions):
+        """
+        Test the access_nested_map function with exceptions.
+        """
+        with self.assertRaises(exceptions):
+            access_nested_map(nested_map, path)
