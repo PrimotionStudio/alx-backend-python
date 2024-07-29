@@ -134,7 +134,7 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
             if url == cls.org_payload:
                 return MockResponse(cls.repos_payload)
             return MockResponse({})
-        
+
         cls.mock_get.side_effect = get_side_effect
 
     @classmethod
