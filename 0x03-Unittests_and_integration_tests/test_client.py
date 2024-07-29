@@ -89,20 +89,32 @@ class TestGithubOrgClient(unittest.TestCase):
         self.assertEqual(GithubOrgClient.has_license(license, key), boolean)
 
 
-@parameterized_class(
-    (
-        "org_payload",
-        "repos_payload",
-        "expected_repos",
-        "apache2_repos"
-    ),
-    [
-        TEST_PAYLOAD[0][0]["repos_url"],
-        TEST_PAYLOAD[0][1],
-        TEST_PAYLOAD[0][2],
-        TEST_PAYLOAD[0][3],
-    ]
-)
+class MockResponse:
+    """
+    lorem ipsum
+    """
+    def __init__(self, json_data):
+        """
+        lorem ipsum
+        """
+        self.json_data = json_data
+
+    def json(self):
+
+        """
+        lorem ipsum
+        """
+        return self.json_data
+
+
+@parameterized_class([
+    {
+        "org_payload": TEST_PAYLOAD[0][0]['repos_url'],
+        "repos_payload": TEST_PAYLOAD[0][1],
+        "expected_repos": TEST_PAYLOAD[0][2],
+        "apache2_repos": TEST_PAYLOAD[0][3]
+    }
+])
 class TestIntegrationGithubOrgClient(unittest.TestCase):
     """
     lorem ipsum
@@ -112,10 +124,22 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
         """
         lorem ipsum
         """
+        cls.get_patcher = patch('request.get')
+        cls.mock_get = cls.get_patcher.start()
+
+        def get_side_effect(url):
+            """
+            lorem ipsum
+            """
+            if url == cls.org_payload:
+                return MockResponse(cls.repos_payload)
+            return MockResponse({})
         
+        cls.mock_get.side_effect = get_side_effect
 
     @classmethod
     def tearDownClass(cls):
         """
         lorem ipsum
         """
+        cls.get_patcher.stop()
