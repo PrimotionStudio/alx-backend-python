@@ -4,9 +4,10 @@ lorem ipsum dolor latom
 """
 import unittest
 from unittest.mock import patch, PropertyMock
-from parameterized import parameterized
+from parameterized import parameterized, parameterized_class
 
 
+TEST_PAYLOAD = __import__("fixtures").TEST_PAYLOAD
 GithubOrgClient = __import__('client').GithubOrgClient
 
 
@@ -86,3 +87,35 @@ class TestGithubOrgClient(unittest.TestCase):
         lorem ipsum
         """
         self.assertEqual(GithubOrgClient.has_license(license, key), boolean)
+
+
+@parameterized_class(
+    (
+        "org_payload",
+        "repos_payload",
+        "expected_repos",
+        "apache2_repos"
+    ),
+    [
+        TEST_PAYLOAD[0][0]["repos_url"],
+        TEST_PAYLOAD[0][1],
+        TEST_PAYLOAD[0][2],
+        TEST_PAYLOAD[0][3],
+    ]
+)
+class TestIntegrationGithubOrgClient(unittest.TestCase):
+    """
+    lorem ipsum
+    """
+    @classmethod
+    def setUpClass(cls):
+        """
+        lorem ipsum
+        """
+        
+
+    @classmethod
+    def tearDownClass(cls):
+        """
+        lorem ipsum
+        """
